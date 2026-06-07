@@ -1,4 +1,10 @@
 import RegisterForm from "@/components/auth/RegisterForm";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Cashtrackr - Registro',
+    description: 'Registro de cashtrackr'
+};
 
 export default function RegisterPage() {
   return (
