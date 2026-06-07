@@ -1,0 +1,18 @@
+import LoginForm from '@/components/auth/LoginForm';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Cashtrackr - Iniciar sesión',
+    description: 'Inicio de sesión en cashtrackr'
+};
+
+export default function LoginPage() {
+  return (
+    <>
+        <h1 className="font-black text-6xl text-purple-950">Iniciar Sesión</h1>
+        <p className="text-3xl font-bold">y controla tus <span className="text-amber-300">finanzas</span></p>
+
+        <LoginForm />
+    </>
+  )
+}
