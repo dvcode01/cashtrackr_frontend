@@ -1,6 +1,6 @@
 "use client";
 
-import { register } from "@/app/actions/create-account-action";
+import { register } from "@/actions/create-account-action";
 
 export default function RegisterForm() {
     return (
