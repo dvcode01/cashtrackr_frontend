@@ -1,20 +1,28 @@
 "use client";
 
 import { register } from "@/actions/create-account-action";
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import ErrorMessage from "../ui/ErrorMessage";
 import SuccessMessage from "../ui/SuccessMessage";
 
 export default function RegisterForm() {
+    const ref = useRef<HTMLFormElement>(null);
     const [state, dispatch] = useActionState(register, {
         errors: [],
         success: ''
     });
 
+    useEffect(() => {
+        if(state.success){
+            ref.current?.reset();
+        }
+    }, [state]);
+
     return (
         <form
             className="mt-14 space-y-5"
             noValidate
+            ref={ref}
             action={dispatch}
         >
             {state.errors.map(error => <ErrorMessage>{error}</ErrorMessage>)}
