@@ -2,7 +2,11 @@
 
 import { RegisterSchema } from "@/src/schemas";
 
-export async function register(formData: FormData) {
+type ActionStateType = {
+    errors: string[];
+};
+
+export async function register(prevState: ActionStateType, formData: FormData) {
     const registerData = {
         email: formData.get('email'),
         name: formData.get('name'),
@@ -12,12 +16,36 @@ export async function register(formData: FormData) {
 
     // validar
     const register = RegisterSchema.safeParse(registerData);
-    const errors = register.error?.issues.map(error => error.message)
-    console.log(errors);
-    console.log(register);
+    
+    if(!register.success){
+        const errors = register.error.issues.map(error => error.message);
+
+        return {
+            errors
+        };
+    }
 
     // registrar
     const url = `${process.env.API_URL}/auth/create-account`;
+    const req = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            
+        },
+        body: JSON.stringify({
+            name: register.data.name,
+            email: register.data.email,
+            password: register.data.password
+        })
+    });
+
+    const json = await req.json();
+    console.log(json);
+
+    return {
+        errors: []
+    }
 }
 
 
