@@ -1,5 +1,7 @@
 "use server";
 
+import { RegisterSchema } from "@/src/schemas";
+
 export async function register(formData: FormData) {
     const registerData = {
         email: formData.get('email'),
@@ -8,8 +10,14 @@ export async function register(formData: FormData) {
         password_confirmation: formData.get('password_confirmation')
     };
 
-    console.log('register desde server action');
-    console.log(registerData);
+    // validar
+    const register = RegisterSchema.safeParse(registerData);
+    const errors = register.error?.issues.map(error => error.message)
+    console.log(errors);
+    console.log(register);
+
+    // registrar
+    const url = `${process.env.API_URL}/auth/create-account`;
 }
 
 
