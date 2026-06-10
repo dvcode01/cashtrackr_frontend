@@ -1,4 +1,10 @@
 import ConfirmAccountForm from "@/components/auth/ConfirmAccountForm";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Cashtrackr - Confirmar Cuenta',
+  description: 'Confirmar Cuenta de cashtrackr'
+};
 
 export default function ConfirmAccountPage() {
   return (
