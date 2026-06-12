@@ -1,18 +1,23 @@
 "use client";
 
+import { confirmAccount } from "@/actions/confirm-account-action";
 import { PinInputField, PinInput } from "@chakra-ui/pin-input";
-import { useState } from "react";
+import { startTransition, useActionState, useState } from "react";
 
 export default function ConfirmAccountForm() {
     const [token, setToken] = useState('');
+    const [state, dispatch] = useActionState(confirmAccount, {
+        errors: []
+    });
 
     const handleChange = (token: string) => {
         setToken(token);
-        console.log(token);
     };
 
     const handleComplete = () => {
-        console.log('Llegaste al final');
+        startTransition(() => {
+            dispatch();
+        });
     };
 
     return (
