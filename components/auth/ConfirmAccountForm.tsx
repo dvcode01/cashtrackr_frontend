@@ -3,6 +3,8 @@
 import { confirmAccount } from "@/actions/confirm-account-action";
 import { PinInputField, PinInput } from "@chakra-ui/pin-input";
 import { startTransition, useActionState, useEffect, useState } from "react";
+import ErrorMessage from "../ui/ErrorMessage";
+import SuccessMessage from "../ui/SuccessMessage";
 
 export default function ConfirmAccountForm() {
     const [isComplete, setIsComplete] = useState(false);
@@ -10,7 +12,8 @@ export default function ConfirmAccountForm() {
 
     const confirmAccountWithToken = confirmAccount.bind(null, token);
     const [state, dispatch] = useActionState(confirmAccountWithToken, {
-        errors: []
+        errors: [],
+        success: ''
     });
 
     useEffect(() => {
@@ -30,16 +33,22 @@ export default function ConfirmAccountForm() {
     };
 
     return (
-        <div className="flex justify-center gap-5 mt-10">
-            <PinInput onChange={handleChange} value={token} onComplete={handleComplete}>
-                <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
-                <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
-                <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
-                <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
-                <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
-                <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
-            </PinInput>
-        </div>
+        <>
+            {state.errors.map(error => <ErrorMessage>{error}</ErrorMessage>)}
+            {state.success && <SuccessMessage>{state.success}</SuccessMessage>}
+
+            <div className="flex justify-center gap-5 mt-10">
+                <PinInput onChange={handleChange} value={token} onComplete={handleComplete}>
+                    <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
+                    <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
+                    <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
+                    <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
+                    <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
+                    <PinInputField className="w-10 h-10 rounded-lg shadow border border-gray-300 placeholder-white text-center" />
+                </PinInput>
+            </div>
+        
+        </>
     )
 }
 
