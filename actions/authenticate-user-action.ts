@@ -1,6 +1,6 @@
 "use server";
 
-import { LoginSchema } from "@/src/schemas";
+import { ErrorResponse, LoginSchema } from "@/src/schemas";
 
 type ActionStateType = {
     errors: string[]
@@ -32,9 +32,16 @@ export async function authenticate(prevState: ActionStateType, formData: FormDat
             password: auth.data.password
         })
     });
-
+    
     const json = await req.json();
-    console.log(json);
+
+    if(!req.ok) {
+        const { error } = ErrorResponse.parse(json); 
+
+        return {
+            errors: [error]
+        }
+    }
 
     return {
         errors: []
