@@ -20,11 +20,17 @@ export const LoginSchema = z.object({
                 .min(1, {message: 'Password cannot be empty'})
 });
 
+export const TokenSchema = z.string({message: 'Invalid Token'})
+                                .length(6, {message: 'Invalid Token'});
+
 export const SuccessSchema = z.string();
 
 export const ErrorResponse = z.object({
     error: z.string()
 });
 
-export const TokenSchema = z.string({message: 'Invalid Token'})
-                                .length(6, {message: 'Invalid Token'});
+export const UserSchema = z.object({
+        id: z.number(),
+        name: z.string(),
+        email: z.email()
+});
