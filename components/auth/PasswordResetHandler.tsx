@@ -10,7 +10,8 @@ export default function PasswordResetHandler() {
 
     return (
         <>
-            {!isValidateToken ? <ValidateTokenForm /> : <ResetPasswordForm /> }
+            {!isValidateToken ? <ValidateTokenForm setIsValidateToken={setIsValidateToken} /> 
+                              : <ResetPasswordForm /> }
         </>
     )
 }

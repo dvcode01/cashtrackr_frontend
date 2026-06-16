@@ -1,6 +1,6 @@
 "use server";
 
-import { ErrorResponse, TokenSchema } from "@/src/schemas";
+import { ErrorResponse, SuccessSchema, TokenSchema } from "@/src/schemas";
 
 type ActionStateType = {
     errors: string[],
@@ -39,8 +39,10 @@ export async function validateToken(token: string, prevState: ActionStateType){
         };
     }
 
+    const success = SuccessSchema.parse(json);
+
     return {
         errors: [],
-        success: ''
+        success
     };
 }
