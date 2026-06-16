@@ -52,6 +52,14 @@ export const BudgetAPIResponseSchema = z.object({
         updatedAt: z.string()
 });
 
+export const DraftBudgetSchema = z.object({
+        name: z.string()
+                .min(1, {message: 'The name of the budget is required'}),
+        amount: z.coerce.
+                number({message: 'Invalid quantity'})
+                .min(1, {message: 'Invalid quantity'}),
+});
+
 export const UserSchema = z.object({
         id: z.number(),
         name: z.string(),
