@@ -47,7 +47,7 @@ export const BudgetAPIResponseSchema = z.object({
         id: z.number(),
         name: z.string(),
         amount: z.string(),
-        userId: z.number(),
+        user_id: z.number(),
         createdAt: z.string(),
         updatedAt: z.string()
 });
