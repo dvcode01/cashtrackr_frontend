@@ -1,18 +1,47 @@
+import { validateToken } from "@/actions/validate-token-action";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
+import { startTransition, useActionState, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ValidateTokenForm() {
-    const handleChange = (token: string) => {
+    const [token, setToken] = useState('');
+    const [isComplete, setIsComplete] = useState(false);
+    const validateTokenInput = validateToken.bind(null, token);
+    const [state, dispatch] = useActionState(validateTokenInput, {
+        errors: [],
+        success: ''
+    });
 
+    useEffect(() => {
+        if(state.errors){
+            state.errors.forEach(error => {
+                toast.error(error); 
+            });
+        }
+    }, [state]);
+
+    useEffect(() => {
+        startTransition(() => {
+            if(isComplete){
+                dispatch();
+            }
+        });
+
+    }, [isComplete]);
+
+    const handleChange = (token: string) => {
+        setToken(token);
+        setIsComplete(false);
     }
 
     const handleComplete = () => {
-
+        setIsComplete(true);
     }
 
     return (
         <div className="flex justify-center gap-5 my-10">
             <PinInput
-                value={''}
+                value={token}
                 onChange={handleChange}
                 onComplete={handleComplete}
             >
