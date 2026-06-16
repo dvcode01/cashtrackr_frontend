@@ -26,7 +26,7 @@ async function getUserBudgets(){
 
 export default async function AdminPage() {
     const budgets = await getUserBudgets();
-    
+
     return (
         <>
             <div className='flex flex-col-reverse md:flex-row md:justify-between items-center'>
@@ -37,7 +37,7 @@ export default async function AdminPage() {
                     </p>
                 </div>
                 <Link
-                    href={'/admin/budget/new'}
+                    href={'/admin/budgets/new'}
                     className='bg-amber-500 p-2 rounded-lg text-white font-bold w-full md:w-auto text-center'
                 >
                     Crear Presupuesto
