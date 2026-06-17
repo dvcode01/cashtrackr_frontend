@@ -4,6 +4,7 @@ import getToken from "@/src/auth/token";
 import { Metadata } from "next";
 import Link from "next/link";
 import { formatCurrency, formatDate } from '@/src/utils';
+import BudgetMenu from '@/components/budget/BudgetMenu';
 
 export const metadata: Metadata = {
     title: 'Cashtrackr - Panel de Administración',
@@ -69,7 +70,7 @@ export default async function AdminPage() {
                                 </div>
                             </div>
                             <div className="flex shrink-0 items-center gap-x-6">
-
+                                <BudgetMenu budgetID={budget.id} />
                             </div>
                         </li>
                     ))}
