@@ -3,6 +3,7 @@ import { BudgetsAPIResponseSchema } from "@/src/schemas";
 import getToken from "@/src/auth/token";
 import { Metadata } from "next";
 import Link from "next/link";
+import { formatCurrency, formatDate } from '@/src/utils';
 
 export const metadata: Metadata = {
     title: 'Cashtrackr - Panel de Administración',
@@ -46,9 +47,9 @@ export default async function AdminPage() {
             </div>
 
             {budgets.length ? (
-                <ul role="list" className="divide-y divide-gray-300 border shadow-lg mt-10 ">
+                <ul role="list" className="divide-y divide-gray-300 border shadow-lg mt-10 bg-slate-50">
                     {budgets.map((budget) => (
-                        <li key={budget.id} className="flex justify-between gap-x-6 p-5 ">
+                        <li key={budget.id} className="flex justify-between gap-x-6 p-5">
                             <div className="flex min-w-0 gap-x-4">
                                 <div className="min-w-0 flex-auto space-y-2">
                                     <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -59,10 +60,11 @@ export default async function AdminPage() {
                                         </Link>
                                     </p>
                                     <p className="text-xl font-bold text-amber-500">
-                                        {budget.amount}
+                                        {formatCurrency( Number(budget.amount) )}
                                     </p>
                                     <p className='text-gray-500  text-sm'>
-
+                                        Ultima actualización: {''}
+                                        <span className='font-bold'>{formatDate( budget.updatedAt )}</span>
                                     </p>
                                 </div>
                             </div>
