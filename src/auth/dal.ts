@@ -2,7 +2,7 @@ import 'server-only';
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { UserSchema } from "../schemas";
-import getToken from '../utils/token';
+import getToken from './token';
 
 export const verifySession = cache(async () => {
     const token = await getToken();
