@@ -1,7 +1,7 @@
 "use server";
 
 import { DraftBudgetSchema, ErrorResponse, SuccessSchema } from "@/src/schemas";
-import getToken from "@/src/utils/token";
+import getToken from "@/src/auth/token";
 
 type ActionStateType = {
     errors: string[],

@@ -1,6 +1,6 @@
 import 'server-only';
 import { BudgetsAPIResponseSchema } from "@/src/schemas";
-import getToken from "@/src/utils/token";
+import getToken from "@/src/auth/token";
 import { Metadata } from "next";
 import Link from "next/link";
 
