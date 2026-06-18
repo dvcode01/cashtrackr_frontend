@@ -76,7 +76,7 @@ export default async function AdminPage() {
                     ))}
                 </ul>
             ) : (
-                <p>
+                <p className='text-center py-28'>
                     No hay presupuestos aún {''}
                     <Link href={'/admin/budgets/new'} className='font-bold text-purple-950'>Comienza creando una</Link>
                 </p>
