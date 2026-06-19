@@ -4,8 +4,9 @@ import { BudgetAPIResponseSchema } from "@/src/schemas";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
-async function getBudget(id: string) {
+const getBudget = cache(async (id: string) => {
     const token = await getToken();
 
     const url = `${process.env.API_URL}/budgets/${id}`;
@@ -23,7 +24,7 @@ async function getBudget(id: string) {
 
     const budget = BudgetAPIResponseSchema.parse(json);
     return budget;
-}
+});
 
 export async function generateMetadata({params}: {params: {id: string}}): Promise<Metadata>{
     const { id } = await params;
