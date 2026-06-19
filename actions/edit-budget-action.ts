@@ -2,6 +2,7 @@
 
 import getToken from "@/src/auth/token";
 import { Budget, DraftBudgetSchema, ErrorResponse, SuccessSchema } from "@/src/schemas";
+import { revalidatePath } from "next/cache";
 
 type ActionStateType = {
     errors: string[],
@@ -48,6 +49,8 @@ export async function editBudget(budgetID: Budget['id'], prevState: ActionStateT
             success: ''
         };
     }
+
+    revalidatePath('/admin');
 
     const success = SuccessSchema.parse(json);
 
