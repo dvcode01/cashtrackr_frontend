@@ -1,10 +1,18 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { DialogTitle } from "@headlessui/react"
+import { useActionState } from "react";
+import { deleteBudget } from "@/actions/delete-budget-action";
 
 export default function ConfirmPasswordForm() {
-    const pathname = usePathname()
-    const router = useRouter()
-    const searchParams = useSearchParams()
+    const pathname = usePathname();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const [state, dispatch] = useActionState(deleteBudget, {
+        errors: [],
+        success: ''
+    });
+
 
     const closeModal = () => {
         const hideModal = new URLSearchParams(searchParams.toString())
@@ -25,6 +33,7 @@ export default function ConfirmPasswordForm() {
             </p>
             <p className='text-gray-600 text-sm'>(Un presupuesto eliminado y sus gastos no se pueden recuperar)</p>
             <form
+                action={dispatch}
                 className=" mt-14 space-y-5"
                 noValidate
             >
