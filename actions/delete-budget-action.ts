@@ -21,6 +21,7 @@ export async function deleteBudget(budgetID: Budget['id'], prevState: ActionStat
     const token = await getToken();
     const checkURL = `${process.env.API_URL}/auth/check-password`;
 
+    // Comprueba el password
     const checkReq = await fetch(checkURL, {
         method: 'POST',
         headers: {
@@ -42,7 +43,24 @@ export async function deleteBudget(budgetID: Budget['id'], prevState: ActionStat
         }
     }
 
-    
+    // Elimina presupuesto
+    const deleteURL = `${process.env.API_URL}/budgets/${budgetID}`;
+    const deleteReq = await fetch(deleteURL, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    const deleteJSON = await deleteReq.json();
+
+    if(!deleteReq.ok){
+        const { error } = ErrorResponse.parse(deleteJSON);
+        return {
+            errors: [error],
+            success: ''
+        }
+    }
 
     return {
         errors: [],
