@@ -66,6 +66,8 @@ export const UserSchema = z.object({
         email: z.email()
 });
 
+export const passswordValidationSchema = z.string().min(1, {message: 'Invalid password'});
+
 export const BudgetsAPIResponseSchema = z.array(BudgetAPIResponseSchema);
 
 export type User = z.infer<typeof UserSchema>;

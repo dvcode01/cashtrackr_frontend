@@ -2,13 +2,16 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { DialogTitle } from "@headlessui/react"
 import { useActionState } from "react";
 import { deleteBudget } from "@/actions/delete-budget-action";
+import ErrorMessage from "../ui/ErrorMessage";
 
 export default function ConfirmPasswordForm() {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const budgetID = +searchParams.get('deleteBudgetID')!;
 
-    const [state, dispatch] = useActionState(deleteBudget, {
+    const deleteBudgetWithID = deleteBudget.bind(null, budgetID);
+    const [state, dispatch] = useActionState(deleteBudgetWithID, {
         errors: [],
         success: ''
     });
@@ -32,6 +35,8 @@ export default function ConfirmPasswordForm() {
                 <span className="text-amber-500">eliminar el presupuesto {''}</span>
             </p>
             <p className='text-gray-600 text-sm'>(Un presupuesto eliminado y sus gastos no se pueden recuperar)</p>
+
+            {state.errors.map((error, index) => <ErrorMessage key={index}>{error}</ErrorMessage>)}
             <form
                 action={dispatch}
                 className=" mt-14 space-y-5"
