@@ -1,7 +1,8 @@
 "use server";
 
 import getToken from "@/src/auth/token";
-import { Budget, ErrorResponse, passswordValidationSchema } from "@/src/schemas";
+import { Budget, ErrorResponse, passswordValidationSchema, SuccessSchema } from "@/src/schemas";
+import { revalidatePath } from "next/cache";
 
 type ActionStateType = {
     errors: string[],
@@ -62,9 +63,13 @@ export async function deleteBudget(budgetID: Budget['id'], prevState: ActionStat
         }
     }
 
+    revalidatePath('/admin');
+
+    const success = SuccessSchema.parse(deleteJSON);
+
     return {
         errors: [],
-        success: ''
+        success
     };
 }
 
