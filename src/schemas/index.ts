@@ -60,6 +60,14 @@ export const DraftBudgetSchema = z.object({
                 .min(1, {message: 'Invalid quantity'}),
 });
 
+export const DraftExpenseSchema = z.object({
+        name: z.string()
+                .min(1, {message: 'The name is required'}),
+        amount: z.coerce.
+                number({message: 'Invalid quantity'})
+                .min(1, {message: 'Invalid quantity'}),
+});
+
 export const UserSchema = z.object({
         id: z.number(),
         name: z.string(),
