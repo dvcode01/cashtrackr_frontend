@@ -1,6 +1,6 @@
 import { useParams, useSearchParams } from "next/navigation";
 import { DialogTitle } from "@headlessui/react";
-import { startTransition, useActionState } from "react";
+import { startTransition, useActionState, useEffect } from "react";
 import { deleteExpense } from "@/actions/delete-expense-action";
 
 type DeleteExpenseForm = {
@@ -21,6 +21,12 @@ export default function DeleteExpenseForm({ closeModal }: DeleteExpenseForm) {
     errors: [],
     success: ''
   });
+
+  useEffect(() => {
+    if(!Number.isInteger(Number(budgetID)) || !Number.isInteger(Number(expenseID))){
+      closeModal();
+    }
+  }, []);
 
   return (
     <>
