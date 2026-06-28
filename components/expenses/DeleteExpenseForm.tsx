@@ -3,6 +3,7 @@ import { DialogTitle } from "@headlessui/react";
 import { startTransition, useActionState, useEffect } from "react";
 import { deleteExpense } from "@/actions/delete-expense-action";
 import { toast } from "react-toastify";
+import ErrorMessage from "../ui/ErrorMessage";
 
 type DeleteExpenseForm = {
   closeModal: () => void
@@ -44,6 +45,9 @@ export default function DeleteExpenseForm({ closeModal }: DeleteExpenseForm) {
       >
         Eliminar Gasto
       </DialogTitle>
+
+      {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
+
       <p className="text-xl font-bold">Confirma para eliminar, {''}
         <span className="text-amber-500">el gasto</span>
       </p>
