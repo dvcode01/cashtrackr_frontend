@@ -1,6 +1,8 @@
 "use server";
 
-import { Budget, Expense } from "@/src/schemas";
+import getToken from "@/src/auth/token";
+import { Budget, ErrorResponse, Expense, SuccessSchema } from "@/src/schemas";
+import { revalidatePath } from "next/cache";
 
 type ExpenseAndBudgetIDType = {
     budgetId: Budget['id'],
@@ -13,12 +15,32 @@ type ActionStateType = {
 };
 
 export async function deleteExpense({budgetId, expenseId}: ExpenseAndBudgetIDType, prevState: ActionStateType){
-    console.log('desde delete expense');
+    const token = await getToken();
+    const url = `${process.env.API_URL}/budgets/${budgetId}/expenses/${expenseId}`;
+    const req = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
+    const json = await req.json();
+
+    if(!req.ok){
+        const { error } = ErrorResponse.parse(json);
+        return {
+            errors: [error],
+            success: ''
+        };
+    }
+
+    const success = SuccessSchema.parse(json);
+    revalidatePath(`/admin/budgets/${budgetId}`);
+    console.log('desde delete expense');
 
     return {
         errors: [],
-        success: ''
+        success
     }
 }
 

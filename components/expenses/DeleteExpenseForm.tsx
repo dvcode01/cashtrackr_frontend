@@ -2,6 +2,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { DialogTitle } from "@headlessui/react";
 import { startTransition, useActionState, useEffect } from "react";
 import { deleteExpense } from "@/actions/delete-expense-action";
+import { toast } from "react-toastify";
 
 type DeleteExpenseForm = {
   closeModal: () => void
@@ -27,6 +28,13 @@ export default function DeleteExpenseForm({ closeModal }: DeleteExpenseForm) {
       closeModal();
     }
   }, []);
+
+  useEffect(() => {
+    if(state.success){
+      toast.success(state.success);
+      closeModal();
+    }
+  }, [state]);
 
   return (
     <>
