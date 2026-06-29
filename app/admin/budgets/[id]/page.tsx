@@ -20,6 +20,9 @@ export default async function BudgetDetailsPage({ params }: { params: { id: stri
     const { id } = await params;
     const budget = await getBudget(id);
 
+    const totalSpent = budget.expenses.reduce((total, expense) => total + +expense.amount, 0);
+    const totalAvailable = +budget.amount - totalSpent;
+
     return (
         <>
             <div className='flex justify-between items-center'>
@@ -36,9 +39,9 @@ export default async function BudgetDetailsPage({ params }: { params: { id: stri
                     <div className="mt-10 grid grid-cols-1 md:grid-cols-2">
                         <div className="">Grafica aqui</div>
                         <div className="flex flex-col justify-center items-center md:items-start gap-4">
-                            <Amount label='Presupuesto' amount={300} />
-                            <Amount label='Disponible' amount={300} />
-                            <Amount label='Gastado' amount={300} />
+                            <Amount label='Presupuesto' amount={+budget.amount} />
+                            <Amount label='Disponible' amount={totalAvailable} />
+                            <Amount label='Gastado' amount={totalSpent} />
                         </div>
                     </div>
 
