@@ -1,13 +1,23 @@
 "use client";
 
 import { updatePassword } from "@/actions/update-password-action";
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
+import ErrorMessage from "../ui/ErrorMessage";
+import { toast } from "react-toastify";
 
 export default function ChangePasswordForm() {
+    const ref = useRef<HTMLFormElement>(null);
     const [state, dispatch ] = useActionState(updatePassword, {
         errors: [],
         success: ''
     });
+
+    useEffect(() => {
+        if(state.success){
+            toast.success(state.success);
+            ref.current?.reset();
+        }
+    }, [state]);
 
     return (
         <>
@@ -15,7 +25,10 @@ export default function ChangePasswordForm() {
                 action={dispatch}
                 className=" mt-14 space-y-5"
                 noValidate
+                ref={ref}
             >
+                {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
+
                 <div className="flex flex-col gap-5">
                     <label
                         className="font-bold text-2xl"
