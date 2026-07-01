@@ -2,14 +2,21 @@
 
 import { updateUser } from "@/actions/update-user-action";
 import { User } from "@/src/schemas";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import ErrorMessage from "../ui/ErrorMessage";
+import { toast } from "react-toastify";
 
 export default function ProfileForm({user}: {user: User}) {
     const [state, dispatch] = useActionState(updateUser, {
         errors: [],
         success: ''
     });
+
+    useEffect(() => {
+        if(state.success){
+            toast.success(state.success);
+        }
+    }, [state]);
 
     return (
         <>
@@ -19,7 +26,7 @@ export default function ProfileForm({user}: {user: User}) {
                 noValidate
                 >
                 {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
-                
+
                 <div className="flex flex-col gap-5">
                     <label
                         className="font-bold text-2xl"
