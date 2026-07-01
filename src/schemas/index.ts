@@ -95,6 +95,14 @@ export const UpdatePasswordSchema = z.object({
       path: ["password_confirmation"]
   });
 
+  export const ProfileFormSchema = z.object({
+        name: z.string()
+                .min(1, {message: 'Your name cannot be empty'}),
+        email: z.string()
+                .min(1, {message: 'Email is required'})
+                .email({message: 'Invalid Email'}),
+})
+
 export const passswordValidationSchema = z.string().min(1, {message: 'Invalid password'});
 
 export const BudgetsAPIResponseSchema = z.array(BudgetAPIResponseSchema.omit({'expenses': true}));

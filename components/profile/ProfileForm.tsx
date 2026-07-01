@@ -1,14 +1,25 @@
 "use client";
 
+import { updateUser } from "@/actions/update-user-action";
 import { User } from "@/src/schemas";
+import { useActionState } from "react";
+import ErrorMessage from "../ui/ErrorMessage";
 
 export default function ProfileForm({user}: {user: User}) {
+    const [state, dispatch] = useActionState(updateUser, {
+        errors: [],
+        success: ''
+    });
+
     return (
         <>
             <form
+                action={dispatch}
                 className=" mt-14 space-y-5"
                 noValidate
-            >
+                >
+                {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
+                
                 <div className="flex flex-col gap-5">
                     <label
                         className="font-bold text-2xl"
